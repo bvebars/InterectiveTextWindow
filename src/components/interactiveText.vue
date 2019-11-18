@@ -4,10 +4,13 @@
             <button v-on:click="textBold"><Strong>B</Strong></button>
             <button v-on:click="textItalic"><i>I</i></button>
             <button class="textUnderline" v-on:click="textUnderline">U</button>
-            <button v-on:click="textItalic">Выбор шрифта</button>
-            <select v-model="selected">
+            <select v-model="colorSelected">
                 <option disabled value="">Выберет цвет</option>
                 <option v-for="color in colors" v-bind:key="color.id">{{color}} </option>
+            </select>
+            <select v-model="fontSelected">
+                <option disabled value="">Выберет шрифт</option>
+                <option v-for="font in fonts" v-bind:key="font.id">{{font}} </option>
             </select>
         </div>
         <div id="textField">
@@ -40,12 +43,19 @@
             isActiveBold: false,
             isActiveItalic: false,
             isActiveTextUnderline: false,
-            selected: '',
+            colorSelected: '',
+            fontSelected: '',
             colors: [
                 'black',
                 'yellow',
                 'red',
                 'blue'
+            ],
+            fonts: [
+                'Arial',
+                'Times New Roman',
+                'Verdana',
+                'Georgia'
             ]
         }),
 
@@ -70,13 +80,24 @@
                     this.numberLines = this.value.split("\n").length
                 }
             }
-
-
         }
     }
 </script>
 
 <style>
+    .container {
+        margin: 0 auto;
+        width: 450px;
+    }
+
+    #panel {
+        float: left;
+    }
+
+    #textField {
+        float: left;
+    }
+
     .lengthString {
         width: 400px;
     }

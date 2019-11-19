@@ -1,50 +1,53 @@
 <template>
     <div class="container">
         <div id="panel">
-            <button v-on:click="textBold"><Strong>B</Strong></button>
-            <button v-on:click="textItalic"><i>I</i></button>
-            <button class="textUnderline" v-on:click="textUnderline">U</button>
+            <button v-on:click="isBold = !isBold"><Strong>B</Strong></button>
+            <button v-on:click="isItalic = !isItalic"><i>I</i></button>
+            <button v-on:click="isUnderline = !isUnderline" class="textDecorationUnderline">U</button>
 
             <select v-model="colorSelected">
                 <option disabled value="">Выберет цвет</option>
-                <option v-for="color in colors" v-bind:key="color.id">{{color}} </option>
+                <option v-for="color in colors" v-bind:key="color.id">{{color}}</option>
             </select>
             <select v-model="fontSelected">
                 <option disabled value="">Выберет шрифт</option>
-                <option v-for="font in fonts" v-bind:key="font.id">{{font}} </option>
+                <option v-for="font in fonts" v-bind:key="font.id">{{font}}</option>
             </select>
         </div>
         <div id="textField">
             <textarea
-                    v-bind:class="{
-                    lengthString: isActiveLengthString,
-                    textBold: isActiveBold,
-                    textItalic: isActiveItalic,
-                    textUnderline: isActiveTextUnderline}"
-                    :style="[colorFont, FamilyFont]"
+                    :class="[
+                    {lengthString: isActiveLengthString},
+                    weightFont,
+                    styleFont,
+                    decorationFont
+                    ]"
+                    :style="[colorFont, familyFont]"
                     v-on:keyup.enter="heightLimit"
                     v-on:keyup.delete="reduceLimit"
                     v-model="value"
                     v-bind:[rows]="numberLines"
             ></textarea>
         </div>
-        <h2>Счетчик строк  = {{numberLines}}</h2>
+        <div>
+            <h2>Счетчик строк = {{numberLines}}</h2>
+        </div>
     </div>
 </template>
 <script>
     export default {
         name: 'interactiveText',
         data: () => ({
+            isBold: false,
+            isItalic: false,
+            isUnderline: false,
             rows: 'rows',
             resize: 'none',
             counter: 1,
             text: '',
-            value: '',
+            value: 'Стандартный текст',
             numberLines: 1,
             isActiveLengthString: true,
-            isActiveBold: false,
-            isActiveItalic: false,
-            isActiveTextUnderline: false,
             colorSelected: '',
             fontSelected: '',
             colors: [
@@ -62,15 +65,6 @@
         }),
 
         methods: {
-            textBold: function () {
-                this.isActiveBold = true;
-            },
-            textItalic: function () {
-                this.isActiveItalic = true;
-            },
-            textUnderline: function () {
-                this.isActiveTextUnderline = true;
-            },
             heightLimit: function () {
                 if (this.value.split("\n").length > 10) {
                     return
@@ -84,16 +78,34 @@
             }
         },
         computed: {
-            colorFont: function() {
+            weightFont: function () {
+                return {
+                    'textWeightBold': this.isBold,
+                    'textWeightNormal': !this.isBold
+                }
+            },
+            styleFont: function () {
+                return {
+                    'textStyleItalic': this.isItalic,
+                    'textStyleNormal': !this.isItalic
+                }
+            },
+            decorationFont: function () {
+                return {
+                    'textDecorationUnderline': this.isUnderline,
+                    'textDecorationNormal': !this.isUnderline
+                }
+            },
+            colorFont: function () {
                 return {
                     'color': this.colorSelected
                 }
             },
-            FamilyFont: function () {
+            familyFont: function () {
                 return {
                     'font-family': this.fontSelected
                 }
-            }
+            },
         }
     }
 </script>
@@ -124,17 +136,27 @@
         resize: none;
     }
 
-    .textBold {
+    .textWeightBold {
         font-weight: bold;
     }
 
-    .textItalic {
+    .textWeightNormal {
+        font-weight: normal;
+    }
+
+    .textStyleItalic {
         font-style: italic;
     }
 
-    .textUnderline {
+    .textStyleNormal {
+        font-style: normal;
+    }
+
+    .textDecorationUnderline {
         text-decoration: underline;
     }
 
-
+    .textDecorationNormal {
+        text-decoration: none;
+    }
 </style>

@@ -13,3 +13,8 @@
     }
 </script>
 
+v-bind:class="{
+lengthString: isActiveLengthString,
+textItalic: isActiveItalic,
+textUnderline: isActiveTextUnderline,
+}"

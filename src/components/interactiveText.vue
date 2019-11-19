@@ -4,6 +4,7 @@
             <button v-on:click="textBold"><Strong>B</Strong></button>
             <button v-on:click="textItalic"><i>I</i></button>
             <button class="textUnderline" v-on:click="textUnderline">U</button>
+
             <select v-model="colorSelected">
                 <option disabled value="">Выберет цвет</option>
                 <option v-for="color in colors" v-bind:key="color.id">{{color}} </option>
@@ -20,6 +21,7 @@
                     textBold: isActiveBold,
                     textItalic: isActiveItalic,
                     textUnderline: isActiveTextUnderline}"
+                    :style="[colorFont, FamilyFont]"
                     v-on:keyup.enter="heightLimit"
                     v-on:keyup.delete="reduceLimit"
                     v-model="value"
@@ -80,6 +82,18 @@
                     this.numberLines = this.value.split("\n").length
                 }
             }
+        },
+        computed: {
+            colorFont: function() {
+                return {
+                    'color': this.colorSelected
+                }
+            },
+            FamilyFont: function () {
+                return {
+                    'font-family': this.fontSelected
+                }
+            }
         }
     }
 </script>
@@ -121,5 +135,6 @@
     .textUnderline {
         text-decoration: underline;
     }
+
 
 </style>

@@ -1,20 +1,21 @@
 <template>
     <div class="container">
-        <div id="panel">
-            <button v-on:click="isBold = !isBold"><Strong>B</Strong></button>
-            <button v-on:click="isItalic = !isItalic"><i>I</i></button>
-            <button v-on:click="isUnderline = !isUnderline" class="textDecorationUnderline">U</button>
+        <div class="window">
+            <div id="panel">
+                <button v-on:click="isBold = !isBold"><Strong>B</Strong></button>
+                <button v-on:click="isItalic = !isItalic"><i>I</i></button>
+                <button v-on:click="isUnderline = !isUnderline" class="textDecorationUnderline">U</button>
 
-            <select v-model="colorSelected">
-                <option disabled value="">Выберет цвет</option>
-                <option v-for="color in colors" v-bind:key="color.id">{{color}}</option>
-            </select>
-            <select v-model="fontSelected">
-                <option disabled value="">Выберет шрифт</option>
-                <option v-for="font in fonts" v-bind:key="font.id">{{font}}</option>
-            </select>
-        </div>
-        <div id="textField">
+                <select v-model="colorSelected">
+                    <option disabled value="">Выберет цвет</option>
+                    <option v-for="color in colors" v-bind:key="color.id">{{color}}</option>
+                </select>
+                <select v-model="fontSelected">
+                    <option disabled value="">Выберет шрифт</option>
+                    <option v-for="font in fonts" v-bind:key="font.id">{{font}}</option>
+                </select>
+            </div>
+            <div id="textField">
             <textarea
                     :class="[
                     {lengthString: isActiveLengthString},
@@ -28,9 +29,7 @@
                     v-model="value"
                     v-bind:[rows]="numberLines"
             ></textarea>
-        </div>
-        <div>
-            <h2>Счетчик строк = {{numberLines}}</h2>
+            </div>
         </div>
     </div>
 </template>
@@ -111,6 +110,49 @@
 </script>
 
 <style>
+    #panel {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-top: 1px solid rgb(218, 220, 224);
+        border-bottom: 1px solid rgb(218, 220, 224);
+    }
+
+    textarea {
+        border: none;
+        margin-top: 10px;
+        box-shadow: 0 0 1px 1px rgba(221, 221, 221, 1);
+    }
+
+    select {
+        height: 21px;
+        width: 167px;
+        border: none;
+        border-left: 1px solid rgb(218, 220, 224);
+    }
+
+    select:first-child {
+        border-right: 1px solid rgb(218, 220, 224);
+    }
+
+    button {
+        border: none;
+        background-color: white;
+        width: 22px;
+        height: 22px;
+    }
+
+    button:hover {
+        background-color: rgb(218, 220, 224);
+        cursor: pointer;
+    }
+
+    button:active, button:focus {
+        /*background-color: rgb(223, 248, 255);*/
+        cursor: pointer;
+        outline: white;
+    }
+
+
     .container {
         margin: 0 auto;
         width: 450px;
